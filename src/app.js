@@ -30,9 +30,6 @@ app.use(session({
   saveUninitialized: true
 }))
 
-/*Method Override configuration */
-const methodOverride = require('method-override')
-app.use(methodOverride('_method'))
 
 // ************ WRITE YOUR CODE FROM HERE ************
 // ************ Route System require and use() ************
