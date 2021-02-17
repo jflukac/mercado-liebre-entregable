@@ -39,7 +39,14 @@ const controller = {
 
 	// Create - Form to create
 	create: (req, res) => {
-		res.render('./productsproduct-create-form');
+		let brandRequest = db.Brands.findAll()
+		let categoryRequest = db.Categories.findAll()
+
+		Promise.all([brandRequest, categoryRequest])
+		.then(([brands, categories]) => {
+			res.render('./products/product-create-form', {brands,categories});
+		})
+		.catch(error => {res.send(error)})
 	},
 	
 	// Create -  Method to store
@@ -49,7 +56,7 @@ const controller = {
 
 	// Update - Form to edit
 	edit: (req, res) => {
-		res.render('./productsproduct-edit-form');
+		res.render('./products/product-edit-form');
 	},
 	// Update - Method to update
 	update: (req, res) => {
