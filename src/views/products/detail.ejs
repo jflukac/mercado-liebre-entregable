@@ -11,33 +11,23 @@
 	<div class="container products-wrapper">
 		<div class="row">
 			<div class="col-12">
-				<h2 class="products-title">Detalle del producto: NOMBRE DEL PRODUCTO</h2>
+				<h2 class="products-title">Detalle del producto: <%= productToShow.title %> </h2>
 			</div>
 		</div>
 		<div class="product-detail">
 			<div class="row">
 				<div class="col-12 col-lg-8">
-					<img src="/images/products/1" alt="product image" class="product-detail-img">
+					<img src="<%= productToShow.photo %>" alt="product image" class="product-detail-img">
 					<p class="product-detail-description">
-						PRODUCT DESCRIPTION
+						<%= productToShow.description %>
 					</p>
 				</div>
 				<div class="col-12 col-lg-4">
 					<article class="product-detail-info">
-						<h2 class="product-detail-title">PRODUCT NAME</h2>
-						
-							<p class="product-detail-price small">
-								<span>$PRICE</span>
-								/
-								<b>DISCOUNT% OFF</b>
-							</p>
+						<h2 class="product-detail-title"><%= productToShow.title %></h2>
 							<p class="product-detail-price">
-								$FINAL PRICE
+								$<%= productToShow.title %>
 							</p>
-							<p class="product-detail-price">
-								$PRICE
-							</p>
-
 						<ul class="actions-list">
 							<li>
 								<i class="fas fa-credit-card"></i>
@@ -52,8 +42,8 @@
 						<a href="#" class="buy-now-button">COMPRAR AHORA</a>
 						<hr>
 
-						<a href="/products/edit/1" class="action-button edit">EDITAR PRODUCTO</a>
-						<form action="/products/delete/¿¿" method="POST" style="display: inline-flex">
+						<a href="/products/edit/<%= productToShow.id %>" class="action-button edit">EDITAR PRODUCTO</a>
+						<form action="/products/delete/<%= productToShow.id %>/?_method=DELETE" method="POST" style="display: inline-flex">
 							<button type="submit" class="action-button delete">ELIMINAR</button>
 						</form>
 					</article>

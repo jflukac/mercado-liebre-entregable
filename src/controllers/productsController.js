@@ -1,6 +1,11 @@
 const path = require('path')
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
+/*Database configuration */
+const { Sequelize } = require('../db/models');
+const db = require('../db/models');
+const Op = Sequelize.Op
+
 /*Multer configuration */
 const multer = require('multer')
 const storage = multer.diskStorage({
@@ -16,17 +21,25 @@ const upload = multer({ storage: storage})
 const controller = {
 	// Root - Show all products
 	index: (req, res) => {
-		res.render('products');
+		db.Products.findAll()
+		.then(products => {
+			return res.render('./products/products', {products})
+		})
+		.catch( error => { res.send(error)})
 	},
 
 	// Detail - Detail from one product
 	detail: (req, res) => {
-		res.render('detail');
+		db.Products.findByPk(req.params.id)
+		.then(productToShow => {
+			res.render('./products/detail', {productToShow});
+		})
+		.catch(error => {res.send(error)})
 	},
 
 	// Create - Form to create
 	create: (req, res) => {
-		res.render('product-create-form');
+		res.render('./productsproduct-create-form');
 	},
 	
 	// Create -  Method to store
@@ -36,7 +49,7 @@ const controller = {
 
 	// Update - Form to edit
 	edit: (req, res) => {
-		res.render('product-edit-form');
+		res.render('./productsproduct-edit-form');
 	},
 	// Update - Method to update
 	update: (req, res) => {
