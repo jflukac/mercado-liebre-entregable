@@ -1,4 +1,17 @@
+const path = require('path')
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+/*Multer configuration */
+const multer = require('multer')
+const storage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, path.join(__dirname, './images/products'))
+	},
+	filename: (req, file, cb) => {
+		cb(null, file.filename + '-' + Date.now() + path.extname(file.originalname))
+	}
+})
+const upload = multer({ storage: storage})
 
 const controller = {
 	// Root - Show all products
