@@ -14,7 +14,10 @@ const controller = {
 		.then(products => {
 			return res.render('./products/products', {products})
 		})
-		.catch( error => { res.send(error)})
+		.catch( error => { 
+			console.log(error)
+			throw new Error('Error al acceder a la base de datos')
+		})
 	},
 
 	// Detail - Detail from one product
@@ -23,7 +26,10 @@ const controller = {
 		.then(productToShow => {
 			res.render('./products/detail', {productToShow, title: productToShow.title});
 		})
-		.catch(error => {res.send(error)})
+		.catch(error => {
+			console.log(error)
+			throw new Error('Error al acceder a la base de datos')
+		})
 	},
 
 	// Create - Form to create
@@ -35,7 +41,10 @@ const controller = {
 		.then(([brands, categories]) => {
 			res.render('./products/product-create-form', {brands,categories, previousData: {}, errors:[]});
 		})
-		.catch(error => {res.send(error)})
+		.catch(error => {
+			console.log(error)
+			throw new Error('Error al acceder a la base de datos')
+		})
 	},
 	
 	// Create -  Method to store
@@ -64,7 +73,10 @@ const controller = {
 			.then(product => {
 				res.redirect('/products/' + product.id)
 			})
-			.catch(error => {res.send(error)})
+			.catch(error => {
+				console.log(error)
+				throw new Error('Error al acceder a la base de datos')
+			})
 		} else {
 			let brandRequest = db.Brands.findAll()
 			let categoryRequest = db.Categories.findAll()
@@ -73,17 +85,105 @@ const controller = {
 			.then(([brands, categories]) => {
 				return res.render('./products/product-create-form', {brands,categories, previousData:{...req.body,}, errors: errors.mapped()});
 			})
-			.catch(error => {res.send(error)})
-			}
+			.catch(error => {
+				console.log(error)
+				throw new Error('Error al acceder a la base de datos')
+			})
+		}
 	},
 
 	// Update - Form to edit
 	edit: (req, res) => {
-		res.render('./products/product-edit-form');
+		let productRequest = db.Products.findByPk(req.params.id,{
+			include: [
+				{association: 'category'}
+			]
+		})
+		let brandRequest = db.Brands.findAll()
+		let categoryRequest = db.Categories.findAll()
+
+		Promise.all([productRequest, brandRequest, categoryRequest])
+		.then(([productToEdit, brands, categories]) => {
+		res.render('./products/product-edit-form', {productToEdit,categories, brands, title: 'Editando ' + productToEdit.title,  errors:[]})
+		})
+		.catch(error => {
+			console.log(error)
+			throw new Error('Error al acceder a la base de datos')
+		})
 	},
 	// Update - Method to update
 	update: (req, res) => {
-		// Do the magic
+		let errors = validationResult(req)
+		if (errors.isEmpty()){
+			if (req.files.length == 0) {
+				db.Products.update({
+					title: req.body.title,
+					description: req.body.description,
+					price: req.body.price,
+					stock: req.body.stock,
+					brand_id: req.body.brand
+				}, {
+					where: {
+						id: req.params.id
+					}
+				})
+				.then(() => {
+					db.Products.findByPk(req.params.id)
+					.then(product => {
+						res.redirect('/products/' + product.id)
+					})
+					.catch( error => { 
+						console.log(error)
+						throw new Error('Error al acceder a la base de datos')
+					})
+				})
+				.catch(error => {
+					console.log(error)
+					throw new Error('Error al acceder a la base de datos')
+				})
+			} else {
+				console.log('viajó por acá');
+				db.Products.update({
+					title: req.body.title,
+					description: req.body.description,
+					photo: '/images/products/' + req.files[0].filename,
+					price: req.body.price,
+					stock: req.body.stock,
+					brand_id: req.body.brand
+				}, {
+					where: {
+						id: req.params.id
+					}
+				})
+				.then(() => {
+					db.Products.findByPk(req.params.id)
+					.then(product => {
+						res.redirect('/products/' + product.id)
+					})
+					.catch( error => { 
+						console.log(error)
+						throw new Error('Error al acceder a la base de datos')
+					})
+				})
+				.catch(error => {
+					console.log(error)
+					throw new Error('Error al acceder a la base de datos')
+				})
+			}
+		} else {
+			let brandRequest = db.Brands.findAll()
+			let categoryRequest = db.Categories.findAll()
+			Promise.all([ brandRequest, categoryRequest])
+			.then(([brands, categories]) => {
+				let productToEdit = {...req.body}
+				return res.render('./products/product-edit-form', {brands,categories, productToEdit, errors: errors.mapped(), title: 'Editando ' + productToEdit.title});
+			})
+			.catch(error => {
+				console.log(error)
+				throw new Error('Error al acceder a la base de datos')
+			})
+		}
+
 	},
 
 	// Delete - Delete one product from DB
@@ -95,9 +195,12 @@ const controller = {
 			}
 		})
 		.then(()=> {
-			res.redirect('/')
+			res.redirect('/products/')
 		})
-		.catch(error => {res.send(error)})
+		.catch(error => {
+			console.log(error)
+			throw new Error('Error al acceder a la base de datos')
+		})
 	}
 };
 
