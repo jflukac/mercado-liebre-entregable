@@ -6,18 +6,6 @@ const { Sequelize } = require('../db/models');
 const db = require('../db/models');
 const Op = Sequelize.Op
 
-/*Multer configuration */
-const multer = require('multer')
-const storage = multer.diskStorage({
-	destination: (req, file, cb) => {
-		cb(null, path.join(__dirname, './images/products'))
-	},
-	filename: (req, file, cb) => {
-		cb(null, file.filename + '-' + Date.now() + path.extname(file.originalname))
-	}
-})
-const upload = multer({ storage: storage})
-
 const controller = {
 	// Root - Show all products
 	index: (req, res) => {
@@ -51,7 +39,20 @@ const controller = {
 	
 	// Create -  Method to store
 	store: (req, res) => {
-		// Do the magic
+		//return res.send(req.files[0])
+		db.Products.create({
+			title: req.body.name,
+			description: req.body.description,
+			photo: '/images/products/' + req.files[0].filename,
+			price: req.body.price,
+			stock: req.body.stock,
+			brand_id: req.body.brand,
+			category_id: req.body.category
+		})
+		.then(product => {
+			res.redirect('/products/' + product.id)
+		})
+		.catch(error => {res.send(error)})
 	},
 
 	// Update - Form to edit
@@ -66,6 +67,15 @@ const controller = {
 	// Delete - Delete one product from DB
 	destroy : (req, res) => {
 		// Do the magic
+		db.Products.destroy({
+			where:{
+				id: req.params.id
+			}
+		})
+		.then(()=> {
+			res.redirect('/')
+		})
+		.catch(error => {res.send(error)})
 	}
 };
 
