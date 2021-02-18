@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <!-- Include Head -->
-<%- include('../partials/head', {title: '¿?'}) %>
+<%- include('../partials/head', {title}) %>
 <body>
 	<!-- Header -->
 	<%- include('../partials/headerNavbar') %>
@@ -26,7 +26,7 @@
 					<article class="product-detail-info">
 						<h2 class="product-detail-title"><%= productToShow.title %></h2>
 							<p class="product-detail-price">
-								$<%= productToShow.title %>
+								$<%= productToShow.price %>
 							</p>
 						<ul class="actions-list">
 							<li>

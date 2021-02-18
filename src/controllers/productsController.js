@@ -41,7 +41,7 @@ const controller = {
 	// Create -  Method to store
 	store: (req, res) => {
 		let errors = validationResult(req)
-		return res.send(req.body)
+		//return res.send(req.body)
 		if (req.files.length == 0 ){
 			let errorImagen = {
 				msg: 'Es obligatorio cargar una imagen',
@@ -53,7 +53,7 @@ const controller = {
 		//return res.send(errors)
 		if (errors.isEmpty()){
 			db.Products.create({
-				title: req.body.name,
+				title: req.body.title,
 				description: req.body.description,
 				photo: '/images/products/' + req.files[0].filename,
 				price: req.body.price,
