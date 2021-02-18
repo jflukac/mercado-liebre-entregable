@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const path = require('path')
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
@@ -20,7 +21,7 @@ const controller = {
 	detail: (req, res) => {
 		db.Products.findByPk(req.params.id)
 		.then(productToShow => {
-			res.render('./products/detail', {productToShow});
+			res.render('./products/detail', {productToShow, title: productToShow.title});
 		})
 		.catch(error => {res.send(error)})
 	},
@@ -32,27 +33,48 @@ const controller = {
 
 		Promise.all([brandRequest, categoryRequest])
 		.then(([brands, categories]) => {
-			res.render('./products/product-create-form', {brands,categories});
+			res.render('./products/product-create-form', {brands,categories, previousData: {}, errors:[]});
 		})
 		.catch(error => {res.send(error)})
 	},
 	
 	// Create -  Method to store
 	store: (req, res) => {
-		//return res.send(req.files[0])
-		db.Products.create({
-			title: req.body.name,
-			description: req.body.description,
-			photo: '/images/products/' + req.files[0].filename,
-			price: req.body.price,
-			stock: req.body.stock,
-			brand_id: req.body.brand,
-			category_id: req.body.category
-		})
-		.then(product => {
-			res.redirect('/products/' + product.id)
-		})
-		.catch(error => {res.send(error)})
+		let errors = validationResult(req)
+		return res.send(req.body)
+		if (req.files.length == 0 ){
+			let errorImagen = {
+				msg: 'Es obligatorio cargar una imagen',
+				param: 'photo',
+				location: 'files',
+			}
+			errors.errors.push (errorImagen)
+		}
+		//return res.send(errors)
+		if (errors.isEmpty()){
+			db.Products.create({
+				title: req.body.name,
+				description: req.body.description,
+				photo: '/images/products/' + req.files[0].filename,
+				price: req.body.price,
+				stock: req.body.stock,
+				brand_id: req.body.brand,
+				category_id: req.body.category
+			})
+			.then(product => {
+				res.redirect('/products/' + product.id)
+			})
+			.catch(error => {res.send(error)})
+		} else {
+			let brandRequest = db.Brands.findAll()
+			let categoryRequest = db.Categories.findAll()
+
+			Promise.all([brandRequest, categoryRequest])
+			.then(([brands, categories]) => {
+				return res.render('./products/product-create-form', {brands,categories, previousData:{...req.body,}, errors: errors.mapped()});
+			})
+			.catch(error => {res.send(error)})
+			}
 	},
 
 	// Update - Form to edit

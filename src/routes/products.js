@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path')
+const validation = require('../middlewares/validation')
 
 // ************ Controller Require ************
 const productsController = require('../controllers/productsController');
@@ -23,7 +24,7 @@ router.get('/', productsController.index);
 
 /*** CREATE ONE PRODUCT ***/ 
 router.get('/create', productsController.create); 
-router.post('/', upload.any(),productsController.store); 
+router.post('/', validation.productCreate, upload.any(),productsController.store); 
 
 
 /*** GET ONE PRODUCT ***/ 
