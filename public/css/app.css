@@ -406,7 +406,9 @@ textarea.form-input {
   resize: vertical;
   padding: 15px;
 }
-
+.validation-errors {
+  color: red;
+}
 
 
 /*====== Media-Queries ======*/
@@ -459,4 +461,5 @@ textarea.form-input {
     width: 95%;
     margin: auto;
   }
+  
 }
