@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <!-- Include Head -->
-<%- include('../partials/head', {title: 'Editando: ' + '¿?'}) %>
+<%- include('../partials/head', {title}) %>
 <body>
 	<!-- Header -->
 	<%- include('../partials/headerNavbar') %>
@@ -10,35 +10,60 @@
 	<div class="container products-wrapper">
 		<div class="row">
 			<div class="col-12">
-				<h2 class="products-title">Estás editando: <i>PRODUCT NAME</i></h2>
+				<h2 class="products-title">Estás editando: <i><%= productToEdit.title %> </i></h2>
 			</div>
 		</div>
 		<div class="col-12">
-			<form action="/products/edit/¿?" method="___">
+			<form action="/products/edit/<%= productToEdit.id %>/?_method=PATCH" method="POST" enctype="multipart/form-data">
 				<div class="row product-detail">
 					<div class="col-12 col-md-6">
-						<label for="name" class="form-label">Nombre del producto:</label>
-						<input type="text" id="name" name="name" placeholder="Ej: Zapatillas Reebok" class="form-input">
+						<label for="title" class="form-label">Nombre del producto:</label>
+						<input type="text" id="title" name="title" placeholder="Ej: Zapatillas Reebok" class="form-input" value="<%= productToEdit.title %>">
+						<div class="validation-errors"><p><%= typeof errors.title != 'undefined' ? errors.title.msg : '' %></p></div>
 					</div>
 					<div class="col-12 col-md-6">
 						<label for="price" class="form-label">Precio del producto:</label>
-						<input type="text" id="price" name="price" placeholder="Ej: 5678" class="form-input">
+						<input type="text" id="price" name="price" placeholder="Ej: 5678" class="form-input" value="<%= productToEdit.price %>">
+						<div class="validation-errors"><p><%= typeof errors.price != 'undefined' ? errors.price.msg : '' %></p></div>
 					</div>
 					<div class="col-12 col-md-6">
-						<label for="discount" class="form-label">Descuento:</label>
-						<input type="text" id="discount" name="discount" placeholder="Ej: 15" class="form-input">
+						<label for="stock" class="form-label">Stock (opcional):</label>
+						<input type="text" id="stock" name="stock" placeholder="Ej: 10" class="form-input" value="<%= productToEdit.stock %>">
+					</div>
+					<div class="col-12 col-md-6">
+						<label for="brand" class="form-label">Marca:</label>
+						<select name="brand" id="brand" class="form-input">
+							<option value="">Elegí</option>
+							<% brands.forEach(brand => { %>
+								<% if (brand.id == productToEdit.brand_id) { %>
+									<option value="<%= brand.id %>" selected><%= brand.name %></option>
+								<% } else { %>
+									<option value="<%= brand.id %>"><%= brand.name %></option>
+								<% } %>
+							<% }) %>
+						</select>
+						<div class="validation-errors"><p><%= typeof errors.brand != 'undefined' ? errors.brand.msg : '' %></p></div>
 					</div>
 					<div class="col-12 col-md-6">
 						<label for="category" class="form-label">Categoría:</label>
 						<select name="category" id="category" class="form-input">
-							<option value="">Elegí</option>
-							<option value="in-sale">En oferta</option>
-							<option value="visited" >Últimos agregados</option>
+							<% categories.forEach(category => { %>
+								<% if (category.id == productToEdit.category_id || category.id == productToEdit.category) { %>
+									<option value="<%= category.id %>" selected><%= category.name %></option>
+								<% } %>
+							<% }) %>
 						</select>
+						<div class="validation-errors"><p><%= typeof errors.category != 'undefined' ? errors.category.msg : '' %></p></div>
+					</div>
+					<div class="col-12 col-md-6">
+						<label for="description" class="form-label">Imagen:</label><br>
+						<input type="file" name="photo" id="photo" accept="image/*">
+						<div class="validation-errors"><p><%= typeof errors.photo != 'undefined' ? errors.photo.msg : '' %></p></div>
 					</div>
 					<div class="col-12">
-						<label for="description" class="form-label">Descipción:</label>
-						<textarea name="description" id="description" class="form-input"><%= productToEdit.description %></textarea>
+						<label for="description" class="form-label">Descipción (opcional):</label>
+						<textarea name="description" id="description" class="form-input" value="<%= productToEdit.description %>"></textarea>
+						<div class="validation-errors"><p><%= typeof errors.description != 'undefined' ? errors.description.msg : '' %></p></div>
 					</div>
 					<div class="col-12">
 						<button type="submit" class="buy-now-button">Guardar producto</button>
