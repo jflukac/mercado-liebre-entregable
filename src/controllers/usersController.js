@@ -9,14 +9,12 @@ const Op = Sequelize.Op
 
 const controller = {
     login: (req, res) => {
-        
         res.render('./users/login', {errors:[], userAttempt:{}})
     },
     loginProcess: (req, res) => {
         
     },
     register: (req, res) => {
-    
         res.render('./users/register', {errors:[], userAttempt:{}})
     },
     saveUser: (req, res) => {
