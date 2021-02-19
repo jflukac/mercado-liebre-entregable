@@ -7,11 +7,9 @@
 	<%- include('../partials/headerNavbar') %>
 	<!-- /Header -->
     <main>
-        <div>
-            <h2>Email:<%= locals.user.email %> </h2>
-            <div>
+        <div class="profile">
+            <h2>Email: <%= locals.user.email %> </h2>
                 <img class="profile-image" src="<%= locals.user.avatar %> " alt="<%= locals.user.email %>">
-            </div>
             <form action="/users/<%= locals.user.id %>/?_method=DELETE" method="post">
                 <button class="buy-now-button" type="submit" style="background-color: red;">Eliminar Usuario</button>            
             </form>

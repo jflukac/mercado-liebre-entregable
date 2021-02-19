@@ -7,7 +7,7 @@
 	<%- include('../partials/headerNavbar') %>
 	<!-- /Header -->
     <main>
-        <div>
+        <div class="avatar-form">
             <form action="/users/avatar/upload/<%= locals.user.id %>/?_method=PATCH" method="post" enctype="multipart/form-data">
                 <h2><label for="avatar">Subir un nuevo Avatar</label></h2>
                 <input type="file" name="avatar" id="avatar" accept="image/*">

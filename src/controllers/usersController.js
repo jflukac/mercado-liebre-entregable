@@ -130,6 +130,10 @@ const controller = {
             console.log(error)
             throw new Error('Error al acceder a la base de datos')
         }) 
+    },
+    signOut: (req, res) => {
+        req.session.destroy();
+        res.redirect('/users/login')
     }
 };
 

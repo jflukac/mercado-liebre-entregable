@@ -44,4 +44,7 @@ router.patch('/avatar/upload/:id', userMiddleware.sameUser,upload.any(),usersCon
 /* DELETE USER */
 router.delete('/:id', userMiddleware.sameUser ,usersController.deleteUser);
 
+/* SIGN OUT */
+router.get('/signOut', usersController.signOut)
+
 module.exports = router;
