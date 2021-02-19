@@ -8,10 +8,10 @@
 	<!-- /Header -->
     <main>
         <div>
-            <form action="/users/avatar/upload/?_method=PATCH" method="post" enctype="multipart/form-data">
-                <label for="avatar">Subir un nuevo Avatar</label>
+            <form action="/users/avatar/upload/<%= locals.user.id %>/?_method=PATCH" method="post" enctype="multipart/form-data">
+                <h2><label for="avatar">Subir un nuevo Avatar</label></h2>
                 <input type="file" name="avatar" id="avatar" accept="image/*">
-                <button class="buy-now-button" type="submit" style="background-color: red;">Eliminar Usuario</button>            
+                <button class="buy-now-button" type="submit">Guardar Avatar</button>            
             </form>
             
         </div>

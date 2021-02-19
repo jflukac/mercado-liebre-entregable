@@ -95,14 +95,16 @@ const controller = {
         db.Users.update({
             avatar: '/images/users/' + req.files[0].filename,
         },
-        {where:
-            {id: res.locals.user.id}
+            {where: {
+                id: req.params.id
+            }
         })
         .then(()=> {
             db.Users.findByPk(res.locals.user.id)
             .then(user => {
                 req.session.user = user
                 res.locals.user = req.session.user
+                return res.redirect('/users/profile')
             })
             .catch(error => {
                 console.log(error)
@@ -115,7 +117,7 @@ const controller = {
         }) 
     },
     avatarForm: (req, res) => {
-        res.render('.users/avatarForm', {title: 'Modificar avatar'})
+        res.render('./users/avatarForm', {title: 'Modificar avatar'})
     },
     deleteUser: (req, res) => {
         
