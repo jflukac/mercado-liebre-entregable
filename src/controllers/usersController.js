@@ -88,9 +88,6 @@ const controller = {
     profile: (req, res) => {
         res.render('./users/profile', {title: 'Perfil'})    
     },
-    editUser: (req, res) => {
-        
-    },
     avatar: (req, res) => {
         db.Users.update({
             avatar: '/images/users/' + req.files[0].filename,

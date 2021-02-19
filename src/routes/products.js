@@ -6,6 +6,7 @@ const validation = require('../middlewares/validation')
 
 // ************ Controller Require ************
 const productsController = require('../controllers/productsController');
+const userMiddleware = require('../middlewares/userMiddleware')
 
 // ************ Multer configuration ***********
 const multer = require('multer')
@@ -24,17 +25,17 @@ router.get('/', productsController.index);
 
 /*** CREATE ONE PRODUCT ***/ 
 router.get('/create', productsController.create); 
-router.post('/',  upload.any(),validation.productCreate,productsController.store); 
+router.post('/',  upload.any() , userMiddleware.userAdmin , validation.productCreate,productsController.store); 
 
 
 
 /*** EDIT ONE PRODUCT ***/ 
 router.get('/edit/:id', productsController.edit); 
-router.patch('/edit/:id', upload.any(), validation.productEdit, productsController.update); 
+router.patch('/edit/:id', upload.any(), userMiddleware.userAdmin , validation.productEdit, productsController.update); 
 
 
 /*** DELETE ONE PRODUCT ***/ 
-router.delete('/delete/:id', productsController.destroy); 
+router.delete('/delete/:id', userMiddleware.userAdmin , productsController.destroy); 
 
 /*** GET ONE PRODUCT ***/ 
 router.get('/:id', productsController.detail); 

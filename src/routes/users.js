@@ -5,7 +5,7 @@ const path = require('path')
 
 // ************ Controller Require ************
 const usersController = require('../controllers/usersController');
-
+const userMiddleware = require('../middlewares/userMiddleware')
 const validation = require('../middlewares/validation')
 
 const multer = require('multer')
@@ -21,30 +21,27 @@ const upload = multer({ storage: storage})
 
 
 /* GET LOGIN FORM */
-router.get('/login', usersController.login);
+router.get('/login', userMiddleware.userLogged , usersController.login);
 
 /* LOGIN */
 router.post('/login', validation.userLogin, usersController.loginProcess);
 
 /* GET REGISTER FORM */
-router.get('/register', usersController.register);
+router.get('/register', userMiddleware.userLogged , usersController.register);
 
 /* CREATE USER */
 router.post('/register', validation.userRegister, usersController.saveUser);
 
 /* GET PROFILE */
-router.get('/profile', usersController.profile);  
-
-/* EDIT USER */
-router.patch('/edit/:id', usersController.editUser);
+router.get('/profile', userMiddleware.userToLogin , usersController.profile);  
 
 /* GET UPLOAD AVATAR FORM */
-router.get('/avatar/upload', usersController.avatarForm);
+router.get('/avatar/upload', userMiddleware.userToLogin , usersController.avatarForm);
 
 /* UPLOAD AVATAR */
-router.patch('/avatar/upload/:id', upload.any(),usersController.avatar);
+router.patch('/avatar/upload/:id', userMiddleware.sameUser,upload.any(),usersController.avatar);
 
 /* DELETE USER */
-router.delete('/:id', usersController.deleteUser);
+router.delete('/:id', userMiddleware.sameUser ,usersController.deleteUser);
 
 module.exports = router;
