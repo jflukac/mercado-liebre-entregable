@@ -7,6 +7,33 @@
 	<%- include('../partials/headerNavbar') %>
 	<!-- /Header -->
 
+    <div class="container products-wrapper">
+		<div class="row">
+			<div class="col-12">
+				<h2 class="products-title">Formulario de Registro</h2>
+			</div>
+		</div>
+		<div class="col-12">
+			<form action="/users/register" method="POST">
+				<div class="row product-detail">
+					<div class="col-12 col-md-6">
+						<label for="email" class="form-label">Email:</label>
+						<input type="email" id="email" name="email" placeholder="Ej: juanperez@gmail.com" class="form-input" value="<%= userAttempt.email %>">
+                        <div class="validation-errors"><p><%= typeof errors.email != 'undefined' ? errors.email.msg : '' %></p></div>
+					</div>
+					<div class="col-12 col-md-6">
+						<label for="password" class="form-label">Contraseña</label>
+						<input type="password" id="password" name="password" placeholder="Contraseña" class="form-input">
+                        <div class="validation-errors"><p><%= typeof errors.password != 'undefined' ? errors.password.msg : '' %></p></div>
+					</div>
+					<div class="col-12">
+						<button type="submit" class="buy-now-button">Registrarse</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
     <!-- footer -->
 	<%- include('../partials/footer') %>
 	<!-- /footer -->
