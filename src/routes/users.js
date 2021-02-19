@@ -20,15 +20,18 @@ router.get('/register', usersController.register);
 router.post('/register', validation.userRegister, usersController.saveUser);
 
 /* GET PROFILE */
-router.get('/', usersController.profile);  
+router.get('/profile', usersController.profile);  
 
 /* EDIT USER */
 router.patch('/edit/:id', usersController.editUser);
 
+/* GET UPLOAD AVATAR FORM */
+router.get('/avatar/upload', usersController.avatarForm);
+
 /* UPLOAD AVATAR */
-router.patch('/avatar/:id', usersController.avatar);
+router.patch('/avatar/upload', usersController.avatar);
 
 /* DELETE USER */
-router.delete('/:id', usersController.deleteUser);
+router.delete('/', usersController.deleteUser);
 
 module.exports = router;
