@@ -5,6 +5,8 @@ const router = express.Router();
 // ************ Controller Require ************
 const usersController = require('../controllers/usersController');
 
+const validation = require('../middlewares/validation')
+
 /* GET LOGIN FORM */
 router.get('/login', usersController.login);
 
@@ -15,10 +17,10 @@ router.post('/login', usersController.loginProcess);
 router.get('/register', usersController.register);
 
 /* CREATE USER */
-router.post('/register', usersController.saveUser);
+router.post('/register', validation.userRegister, usersController.saveUser);
 
 /* GET PROFILE */
-router.get('/profile', usersController.profile);  
+router.get('/', usersController.profile);  
 
 /* EDIT USER */
 router.patch('/edit/:id', usersController.editUser);
