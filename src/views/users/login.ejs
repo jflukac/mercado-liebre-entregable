@@ -24,7 +24,7 @@
 						<label for="password" class="form-label">Contraseña</label>
 						<input type="password" id="password" name="password" placeholder="Contraseña" class="form-input">
 					</div>
-                    <div class="validation-errors"><p><%=  errors.length != 0 ? 'El usuario y/o contraseña no son correctos' : '' %></p></div>
+                    <div class="validation-errors"><h3><%= typeof errors != 'undefined' ? 'El usuario y/o contraseña no son correctos' : '' %></h3></div>
 					<div class="col-12">
 						<button type="submit" class="buy-now-button">Igresar</button>
 					</div>

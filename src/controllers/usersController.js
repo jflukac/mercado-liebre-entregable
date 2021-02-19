@@ -15,7 +15,28 @@ const controller = {
     loginProcess: (req, res) => {
         let errors = validationResult(req)
 		if (errors.isEmpty()) {
-
+            db.Users.findOne({
+                where: { email: req.body.email}
+            })
+            .then(userToLogin => {
+                if (userToLogin) {
+                    if(bcrypt.compareSync(req.body.password, userToLogin.password)) {
+                        req.session.user = userToLogin
+                        res.locals.user = req.session.user;
+                        return res.redirect('/users/profile');
+                    } else {
+                        let errors = "El usuario o la contraseña ingresados no son validos."
+                        return res.render ('./users/login' , {errors, userAttempt:{...req.body}})
+                    }
+                } else {
+                    let errors = "El usuario o la contraseña ingresados no son validos."
+                    return res.render ('./users/login' , {errors, userAttempt:{...req.body}})
+                }
+            })
+            .catch(error => {
+                console.log(error)
+                throw new Error('Error al acceder a la base de datos')
+            })
         } else {
             return res.render('./users/login', {errors:errors.mapped(), userAttempt:{...req.body}})
         }
@@ -37,7 +58,6 @@ const controller = {
                         param: 'userRegister',
                         location: 'body'
                     }
-                    
                 }
                 return res.render('./users/register', {errors:errors, userAttempt:{...req.body}})
             } else {
