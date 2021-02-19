@@ -11,7 +11,7 @@ const validation = require('../middlewares/validation')
 router.get('/login', usersController.login);
 
 /* LOGIN */
-router.post('/login', usersController.loginProcess);
+router.post('/login', validation.userLogin, usersController.loginProcess);
 
 /* GET REGISTER FORM */
 router.get('/register', usersController.register);
