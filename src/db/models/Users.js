@@ -23,6 +23,11 @@ module.exports = (sequelize , dataTypes) =>{
             defaultValue: 'user'
 
         },
+        avatar: {
+            type: dataTypes.STRING,
+            allowNull: false,
+            defaultValue: '/images/users/default.png'
+        },
         created_at: {
             type: dataTypes.DATE,
             allowNull: false
