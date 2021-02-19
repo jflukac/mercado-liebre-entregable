@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `mercado_liebre_entregable`.`users` (
   `email` VARCHAR(100) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
   `role` VARCHAR(100) NOT NULL,
+  `avatar` VARCHAR(100) NOT NULL,
   `created_at` TIMESTAMP NOT NULL,
   `updated_at` TIMESTAMP NULL,
   `deleted_at` TIMESTAMP NULL,
