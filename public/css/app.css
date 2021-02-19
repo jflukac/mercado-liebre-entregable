@@ -422,7 +422,28 @@ textarea.form-input {
 .profile-image {
   width: 30%;
 }
-
+.search-pages {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.search-page {
+  padding: 15px;
+}
+.search-previous-pages-button {
+  border: none;
+  cursor: pointer;
+  color: #666666;
+}
+.search-next-pages-button {
+  border: none;
+  cursor: pointer;
+}
+.search-actual-page-button {
+  border: none;
+  cursor: pointer;
+  color: #1259c3;
+}
 
 /*====== Media-Queries ======*/
 @media (min-width: 768px) {
