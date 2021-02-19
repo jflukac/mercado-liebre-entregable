@@ -18,10 +18,13 @@ USE `mercado_liebre_entregable` ;
 -- -----------------------------------------------------
 -- Table `mercado_liebre_entregable`.`users`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `mercado_liebre_entregable`.`users`;
+
 CREATE TABLE IF NOT EXISTS `mercado_liebre_entregable`.`users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(100) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
+  `role` VARCHAR(100) NOT NULL,
   `created_at` TIMESTAMP NOT NULL,
   `updated_at` TIMESTAMP NULL,
   `deleted_at` TIMESTAMP NULL,
@@ -33,6 +36,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mercado_liebre_entregable`.`brands`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `mercado_liebre_entregable`.`brands`;
+
 CREATE TABLE IF NOT EXISTS `mercado_liebre_entregable`.`brands` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
@@ -43,6 +48,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mercado_liebre_entregable`.`categories`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `mercado_liebre_entregable`.`categories`;
+
 CREATE TABLE IF NOT EXISTS `mercado_liebre_entregable`.`categories` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
@@ -53,6 +60,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mercado_liebre_entregable`.`products`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `mercado_liebre_entregable`.`products`;
+
 CREATE TABLE IF NOT EXISTS `mercado_liebre_entregable`.`products` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NOT NULL,
