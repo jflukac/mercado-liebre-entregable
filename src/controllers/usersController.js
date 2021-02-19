@@ -120,7 +120,19 @@ const controller = {
         res.render('./users/avatarForm', {title: 'Modificar avatar'})
     },
     deleteUser: (req, res) => {
-        
+        db.Users.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(()=> {
+            req.session.destroy();
+            res.redirect('/users/login')
+        })
+        .catch(error => {
+            console.log(error)
+            throw new Error('Error al acceder a la base de datos')
+        }) 
     }
 };
 
