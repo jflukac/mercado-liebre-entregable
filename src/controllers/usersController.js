@@ -86,7 +86,7 @@ const controller = {
         }) 
     },
     profile: (req, res) => {
-        
+        res.render('./users/profile', {title: 'Perfil'})    
     },
     editUser: (req, res) => {
         

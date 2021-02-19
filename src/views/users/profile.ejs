@@ -6,6 +6,19 @@
 	<!-- Header -->
 	<%- include('../partials/headerNavbar') %>
 	<!-- /Header -->
+    <main>
+        <div>
+            <h2>Email:<%= locals.user.email %> </h2>
+            <form action="/users/?_method=DELETE" method="post">
+                <button>Eliminar Usuario</button>            
+            </form>
+            <form action="/users/avatar/upload" method="GET">
+                <button type="submit">Modificar Foto de perfil</button>
+            </form>
+            
+        </div>
+        <div></div>
+    </main>
 
     <!-- footer -->
 	<%- include('../partials/footer') %>
