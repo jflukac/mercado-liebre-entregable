@@ -92,7 +92,30 @@ const controller = {
         
     },
     avatar: (req, res) => {
-        
+        db.Users.update({
+            avatar: '/images/users/' + req.files[0].filename,
+        },
+        {where:
+            {id: res.locals.user.id}
+        })
+        .then(()=> {
+            db.Users.findByPk(res.locals.user.id)
+            .then(user => {
+                req.session.user = user
+                res.locals.user = req.session.user
+            })
+            .catch(error => {
+                console.log(error)
+                throw new Error('Error al acceder a la base de datos')
+            }) 
+        })
+        .catch(error => {
+            console.log(error)
+            throw new Error('Error al acceder a la base de datos')
+        }) 
+    },
+    avatarForm: (req, res) => {
+        res.render('.users/avatarForm', {title: 'Modificar avatar'})
     },
     deleteUser: (req, res) => {
         
