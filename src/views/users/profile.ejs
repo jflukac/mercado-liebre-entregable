@@ -12,7 +12,7 @@
             <div>
                 <img class="profile-image" src="<%= locals.user.avatar %> " alt="<%= locals.user.email %>">
             </div>
-            <form action="/users/?_method=DELETE" method="post">
+            <form action="/users/<%= locals.user.id %>/?_method=DELETE" method="post">
                 <button class="buy-now-button" type="submit" style="background-color: red;">Eliminar Usuario</button>            
             </form>
             <form action="/users/avatar/upload" method="GET">
