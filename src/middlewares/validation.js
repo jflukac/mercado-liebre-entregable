@@ -19,4 +19,7 @@ module.exports = {
         check('email').isEmail().withMessage('El email ingresado no es valido'),
         check('password').isLength({min:6, max:9}).withMessage('La contraseña debe tener de 6 a 9 caracteres')
     ],
+    userLogin: [
+        check('email').isEmail().withMessage('El email ingresado no es valido')
+    ]
 }
