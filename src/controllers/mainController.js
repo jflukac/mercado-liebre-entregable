@@ -24,7 +24,7 @@ const controller = {
 			}
 			})
 		.then(total => {
-			let pages = Math.ceil(total/8)
+			let pages = Math.ceil(total/10)
 			db.Products.findAll({
 				where: {
 				  title: { [Op.like]: '%'+ req.query.keywords + '%'}
@@ -32,8 +32,8 @@ const controller = {
 				order: [
 				  ['created_at', 'DESC']
 				],
-				limit: 8,
-				offset: (req.params.page-1)*8		
+				limit: 10,
+				offset: (req.params.page-1)*10		
 			})
 			.then(products => {
 				actualPage = req.params.page
