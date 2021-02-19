@@ -29,7 +29,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
-
+const authentication = require ('./middlewares/authentication')
+app.use(authentication)
 
 // ************ WRITE YOUR CODE FROM HERE ************
 // ************ Route System require and use() ************
