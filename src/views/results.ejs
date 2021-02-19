@@ -28,19 +28,46 @@
 								<article class="product-box_data">
 									<h2>$<%= product.price %></h2>
 									<p><%= product.title %></p>
-									<p>stock: <%= product.stock %> unidades</p>
+									<p>stock: <%= product.stock %> u.</p>
 									<i class="fas fa-truck"></i>
 								</article>
 							</a>
 						</section>
 					</div>
 				<% }) %>
+				
 			<% } else { %>
 				<div class="col-12">
 					<h2 class="products-title" style="color: tomato;">No hay productos que coincidan con esa búsqueda</h2>
 				</div>
 			<% } %>
 		</div>
+		<div class="search-pages">
+			<% for( let i = 0; i < pages; i++ ) { %>
+				<% if (i+1 == actualPage) { %>
+					<div class="search-page">
+						<form action="/search/<%= i+1 %>" method="GET" class="search-form">
+							<input type="text" name="keywords" value="<%= keywords %>" class="search-form_input" style="display: none;">
+							<button type="submit" class="search-actual-page-button"><%= i+1 %></button>
+						</form>
+					</div>
+				<% } else if (i+1 < actualPage){ %>
+					<div class="search-page">
+						<form action="/search/<%= i+1 %>" method="GET" class="search-form">
+							<input type="text" name="keywords" value="<%= keywords %>" class="search-form_input" style="display: none;">
+							<button type="submit" class="search-previous-pages-button"><%= i+1 %></button>
+						</form>
+					</div>
+				<% } else if (i+1 > actualPage){ %>
+					<div class="search-page">
+						<form action="/search/<%= i+1 %>" method="GET" class="search-form">
+							<input type="text" name="keywords" value="<%= keywords %>" class="search-form_input" style="display: none;">
+							<button type="submit" class="search-next-pages-button"><%= i+1 %></button>
+						</form>
+					</div>
+				<% } %>
+			<% } %>
+			</div>
 	</div>
 	<!-- /todos los productos -->
 
