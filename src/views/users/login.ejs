@@ -10,73 +10,28 @@
     <div class="container products-wrapper">
 		<div class="row">
 			<div class="col-12">
-				<h2 class="products-title">Formulario de creación de productos</h2>
+				<h2 class="products-title">Inicio de sesión</h2>
 			</div>
 		</div>
 		<div class="col-12">
-			<form action="/products/" method="POST" enctype="multipart/form-data">
+			<form action="/users/login" method="POST">
 				<div class="row product-detail">
 					<div class="col-12 col-md-6">
-						<label for="title" class="form-label">Nombre del producto:</label>
-						<input type="text" id="title" name="title" placeholder="Ej: Zapatillas Reebok" class="form-input" value="<%= previousData.title %>">
-						<div class="validation-errors"><p><%= typeof errors.title != 'undefined' ? errors.title.msg : '' %></p></div>
+						<label for="email" class="form-label">Email:</label>
+						<input type="email" id="email" name="email" placeholder="Ej: juanperez@gmail.com" class="form-input" value="<%= userAttempt.email %>">
 					</div>
 					<div class="col-12 col-md-6">
-						<label for="price" class="form-label">Precio del producto:</label>
-						<input type="text" id="price" name="price" placeholder="Ej: 5678" class="form-input" value="<%= previousData.price %>">
-						<div class="validation-errors"><p><%= typeof errors.price != 'undefined' ? errors.price.msg : '' %></p></div>
+						<label for="password" class="form-label">Contraseña</label>
+						<input type="password" id="password" name="password" placeholder="Contraseña" class="form-input">
 					</div>
-					<div class="col-12 col-md-6">
-						<label for="stock" class="form-label">Stock (opcional):</label>
-						<input type="text" id="stock" name="stock" placeholder="Ej: 10" class="form-input" value="<%= previousData.stock %>">
-					</div>
-					<div class="col-12 col-md-6">
-						<label for="brand" class="form-label">Marca:</label>
-						<select name="brand" id="brand" class="form-input">
-							<option value="">Elegí</option>
-							<% brands.forEach(brand => { %>
-								<% if (brand.id == previousData.brand) { %>
-									<option value="<%= brand.id %>" selected><%= brand.name %></option>
-								<% } else { %>
-									<option value="<%= brand.id %>"><%= brand.name %></option>
-								<% } %>
-							<% }) %>
-						</select>
-						<div class="validation-errors"><p><%= typeof errors.brand != 'undefined' ? errors.brand.msg : '' %></p></div>
-					</div>
-					<div class="col-12 col-md-6">
-						<label for="category" class="form-label">Categoría:</label>
-						<select name="category" id="category" class="form-input">
-							<option value="">Elegí</option>
-							<% categories.forEach(category => { %>
-								<% if (category.id == previousData.category) { %>
-									<option value="<%= category.id %>" selected><%= category.name %></option>
-								<% } else { %>
-									<option value="<%= category.id %>"><%= category.name %></option>
-								<% } %>
-							<% }) %>
-						</select>
-						<div class="validation-errors"><p><%= typeof errors.category != 'undefined' ? errors.category.msg : '' %></p></div>
-					</div>
-					<div class="col-12 col-md-6">
-						<label for="description" class="form-label">Imagen:</label><br>
-						<input type="file" name="photo" id="photo" accept="image/*">
-						<div class="validation-errors"><p><%= typeof errors.photo != 'undefined' ? errors.photo.msg : '' %></p></div>
-					</div>
+                    <div class="validation-errors"><p><%=  errors.length != 0 ? 'El usuario y/o contraseña no son correctos' : '' %></p></div>
 					<div class="col-12">
-						<label for="description" class="form-label">Descipción (opcional):</label>
-						<textarea name="description" id="description" class="form-input" value="<%= previousData.description %>"></textarea>
-						<div class="validation-errors"><p><%= typeof errors.description != 'undefined' ? errors.description.msg : '' %></p></div>
-					</div>
-					<div class="col-12">
-						<button type="submit" class="buy-now-button">Guardar producto</button>
+						<button type="submit" class="buy-now-button">Igresar</button>
 					</div>
 				</div>
 			</form>
 		</div>
-
 	</div>
-
 
     <!-- footer -->
 	<%- include('../partials/footer') %>
