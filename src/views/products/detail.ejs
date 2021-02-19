@@ -17,6 +17,7 @@
 		<div class="product-detail">
 			<div class="row">
 				<div class="col-12 col-lg-8">
+					<!-- <a href="<%= productToShow.photo %>" data-lightbox="image-1"><img src="<%= productToShow.photo %>" alt="product image" class="product-detail-img"></a> -->
 					<img src="<%= productToShow.photo %>" alt="product image" class="product-detail-img">
 					<p class="product-detail-description">
 						<%= productToShow.description %>
@@ -51,11 +52,12 @@
 			</div>
 		</div>
 	</div>
+	
 	<!-- /product detail -->
 
 	<!-- footer -->
 	<%- include('../partials/footer') %>
 	<!-- /footer -->
-
+	<script src="path/to/dist/js/lightbox-plus-jquery.js"></script>
 </body>	
 </html>
